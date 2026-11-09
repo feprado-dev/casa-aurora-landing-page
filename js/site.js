@@ -16,8 +16,13 @@
   $('#diferenciaisGrade').innerHTML = C.diferenciais.map((d) =>
     '<article class="cartao">' + svg(d.icone) + '<h3>' + esc(d.titulo) + '</h3><p>' + esc(d.texto) + '</p></article>').join('');
   $('#passos').innerHTML = C.passos.map((p) => '<li class="reveal"><h3>' + esc(p.titulo) + '</h3><p>' + esc(p.texto) + '</p></li>').join('');
+  // Fotos em AVIF (assets/nome-600.avif e nome-1200.avif) com o JPG como reserva
+  const avif = (src) => esc(src.replace(/\.jpg$/, ''));
+  const TAM = '(max-width: 900px) 92vw, 380px';
   $('#equipeGrade').innerHTML = C.medicas.map((m) =>
-    '<article class="medica reveal"><div class="medica-foto"><img src="' + esc(m.foto) + '" alt="' + esc(m.nome) + '" loading="lazy" width="700" height="985">' + (m.foto2 ? '<img class="alt" src="' + esc(m.foto2) + '" alt="" loading="lazy" width="700" height="985">' : '') + '</div>' +
+    '<article class="medica reveal"><div class="medica-foto">' +
+    '<picture><source type="image/avif" srcset="' + avif(m.foto) + '-600.avif 600w, ' + avif(m.foto) + '-1200.avif 900w" sizes="' + TAM + '"><img src="' + esc(m.foto) + '" alt="' + esc(m.nome) + '" loading="lazy" width="700" height="985"></picture>' +
+    (m.foto2 ? '<picture><source type="image/avif" srcset="' + avif(m.foto2) + '-600.avif"><img class="alt" src="' + esc(m.foto2) + '" alt="" loading="lazy" width="700" height="985"></picture>' : '') + '</div>' +
     '<div class="medica-info"><h3>' + esc(m.nome) + '</h3><p class="cargo">' + esc(C.cargo) + '</p><p class="clinica">' + esc(m.clinica) + '</p>' +
     '<div class="medica-acoes"><button class="btn btn-terra btn-sm" data-abrir-chat="' + esc(m.id) + '">Quero ser atendida por ela</button>' +
     (m.instagram ? '<a class="btn btn-linha-escura btn-sm btn-ig" href="#" data-ig="@' + esc(m.instagram) + '" aria-label="Instagram de ' + esc(m.nome) + ' (perfil fictício)"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.300" cy="6.700" r=".8"/></svg>@' + esc(m.instagram) + '</a>' : '') +

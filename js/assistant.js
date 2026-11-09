@@ -7,7 +7,7 @@
 
   document.body.insertAdjacentHTML('beforeend',
     '<button class="fab" id="fab" aria-label="Abrir assistente"><span class="fab-av-wrap"><img class="fab-av" src="assets/lina.jpg" alt="" width="34" height="34"><span class="ponto"></span></span>Conversar com a ' + esc(A) + '</button>' +
-    '<section class="chat" id="chat" role="dialog" aria-label="Assistente da Casa Aurora" aria-hidden="true">' +
+    '<section class="chat" id="chat" role="dialog" aria-label="Assistente da Casa Aurora" aria-hidden="true" inert>' +
       '<div class="chat-topo"><img class="chat-av" src="assets/lina.jpg" alt="Foto de ' + esc(A) + '" width="46" height="46"><div><strong>' + esc(A) + '</strong><small>Assistente virtual da Casa Aurora</small></div><button class="chat-fechar" id="chatFechar" aria-label="Fechar">×</button></div>' +
       '<div class="chat-msgs" id="msgs" aria-live="polite"></div>' +
       '<div class="chips" id="chips"></div>' +
@@ -46,8 +46,10 @@
 
   const MENU = ['Quero conversar com a equipe', 'Deixar um recado', 'Como funciona o atendimento', 'Quem pode contratar', 'Conhecer as médicas'];
 
+  let quemAbriu = null; // devolve o foco para quem abriu a conversa ao fechar
   function abrir(id) {
-    chat.classList.add('aberto'); chat.setAttribute('aria-hidden', 'false'); fab.classList.add('oculto');
+    if (!chat.classList.contains('aberto')) quemAbriu = document.activeElement;
+    chat.classList.add('aberto'); chat.setAttribute('aria-hidden', 'false'); chat.inert = false; fab.classList.add('oculto');
     if (id && medica(id)) pre = id;
     if (!iniciou) {
       iniciou = true;
@@ -57,7 +59,12 @@
     } else if (pre && !passo) iniciarContato();
     setTimeout(() => cin.focus(), 350);
   }
-  function fechar() { chat.classList.remove('aberto'); chat.setAttribute('aria-hidden', 'true'); fab.classList.remove('oculto'); }
+  function fechar() {
+    if (!chat.classList.contains('aberto')) return;
+    chat.classList.remove('aberto'); chat.setAttribute('aria-hidden', 'true'); chat.inert = true; fab.classList.remove('oculto');
+    const volta = quemAbriu && document.contains(quemAbriu) && quemAbriu.offsetParent !== null ? quemAbriu : fab;
+    volta.focus(); quemAbriu = null;
+  }
   fab.addEventListener('click', () => abrir());
   $('chatFechar').addEventListener('click', fechar);
   document.addEventListener('click', (e) => {

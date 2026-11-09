@@ -98,7 +98,7 @@ h2{font-size:clamp(1.8rem,3.8vw,2.7rem);margin-bottom:2.2rem}
 .cartao svg{width:38px;height:38px;stroke:var(--pink);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;margin-bottom:1.1rem}
 .cartao h3{font-size:1.4rem;margin-bottom:.5rem;line-height:1.2;color:var(--berry)}
 .cartao p{color:var(--muted);font-size:.96rem}
-.grade .cartao{opacity:0;transform:translateY(26px);transition:opacity .7s,transform .7s,box-shadow .35s,border-color .35s}
+.js .grade .cartao{opacity:0;transform:translateY(26px);transition:opacity .7s,transform .7s,box-shadow .35s,border-color .35s}
 .grade .cartao.vis{opacity:1;transform:none}
 .grade .cartao.vis:hover{transform:translateY(-6px)}
 
@@ -133,7 +133,7 @@ h2{font-size:clamp(1.8rem,3.8vw,2.7rem);margin-bottom:2.2rem}
 .rodape .aviso{font-size:.78rem;max-width:42rem;margin:auto}
 .demo-nota{font-size:.78rem;opacity:.9}
 
-.reveal{opacity:0;transform:translateY(26px);transition:opacity .9s ease,transform .9s ease}
+.js .reveal{opacity:0;transform:translateY(26px);transition:opacity .9s ease,transform .9s ease}
 .reveal.vis{opacity:1;transform:none}
 
 /* ---------- assistente ---------- */
