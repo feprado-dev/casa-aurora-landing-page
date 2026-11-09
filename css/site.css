@@ -229,7 +229,4 @@ h2{font-size:clamp(1.8rem,3.8vw,2.7rem);margin-bottom:2.2rem}
 .aviso-ig.on{opacity:1;transform:translate(-50%,0)}
 
 /* botões de Instagram sob o trio de uniformes */
-.ig-trio{max-width:1000px;margin:1.6rem auto 0;display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem;text-align:center}
-.ig-item{display:grid;gap:.45rem;justify-items:center}
-.ig-nome{font-family:var(--serif);font-size:1.15rem;color:var(--berry)}
-@media(max-width:900px){.ig-trio{grid-template-columns:1fr;gap:.6rem}.ig-item{grid-template-columns:1fr auto;align-items:center;justify-items:stretch;text-align:left;background:#fff;border:1px solid var(--borda);border-radius:999px;padding:.35rem .4rem .35rem 1.2rem}.ig-item .btn{white-space:nowrap}}
+.btn-demo{opacity:.65;cursor:default}

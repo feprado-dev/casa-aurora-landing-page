@@ -3,7 +3,7 @@
 (function () {
   const C = CONFIG, A = C.assistente.nome, esc = U.esc;
   const norm = (s) => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
-  const ALERTA = /(sangramento|sangrando|perda de liquido|perdendo liquido|bolsa rompeu|bolsa estourou|contracoes (fortes|regulares|seguidas)|bebe (nao|parou de) (mexe|mexer)|nao (sinto|esta mexendo)|dor forte|falta de ar|desmai|convuls|visao turva|dor de cabeca forte|emergencia|urgencia)/;
+  const ALERTA = /(sangramento|sangrando|perda de liquido|perdendo liquido|bolsa rompeu|bolsa estourou|contracoes (fortes|regulares|seguidas)|bebe (nao|parou de) (mexe|mexer)|nao (sinto|esta mexendo)|dor forte|falta de ar|desmai|convuls|visao turva|dor de cabeca forte|febre|inchaco (repentino|subito|no rosto|nas maos)|inchou de repente|pressao (alta|subiu)|emergencia|urgencia)/;
 
   document.body.insertAdjacentHTML('beforeend',
     '<button class="fab" id="fab" aria-label="Abrir assistente"><span class="fab-av-wrap"><img class="fab-av" src="assets/lina.jpg" alt="" width="34" height="34"><span class="ponto"></span></span>Conversar com a ' + esc(A) + '</button>' +
@@ -120,7 +120,7 @@
     }
     if (passo === 'situacao') {
       dados.situacao = texto;
-      if (/gestante|gravida|gravidez/.test(n)) { passo = 'semanas'; return falar('Que momento especial! De quantas semanas você está, aproximadamente? Se souber, pode dizer a data provável do parto.', { chips: ['Não sei ainda'] }); }
+      if (/\b(gestante|gravida|gravidez)\b/.test(n)) { passo = 'semanas'; return falar('Que momento especial! De quantas semanas você está, aproximadamente? Se souber, pode dizer a data provável do parto.', { chips: ['Não sei ainda'] }); }
       dados.semanas = ''; return perguntarMedica();
     }
     if (passo === 'semanas') { dados.semanas = texto; return perguntarMedica(); }
@@ -152,7 +152,7 @@
     const m = medica(dados.medica);
     DB.add('leads', { status: 'novo', origem: 'Assistente do site', nome: dados.nome, telefone: dados.telefone, situacao: dados.situacao, semanas: dados.semanas, medica: dados.medica, duvida: dados.duvida || '', conversa: log.slice(-60) });
     const msg = 'Olá! Sou ' + dados.nome + '. Deixei meu contato pelo site da Casa Aurora.\nMomento: ' + dados.situacao + (dados.semanas ? '\nGestação: ' + dados.semanas : '') + (dados.duvida ? '\nDúvida: ' + dados.duvida : '');
-    const botao = (num, rot) => !num ? '<span class="btn btn-ouro btn-sm" style="opacity:.65;cursor:default">' + esc(rot) + ' (demonstração)</span>' : '<a class="btn btn-ouro btn-sm" target="_blank" rel="noopener" href="https://wa.me/' + esc(num) + '?text=' + encodeURIComponent(msg) + '">' + esc(rot) + '</a>';
+    const botao = (num, rot) => !num ? '<span class="btn btn-ouro btn-sm btn-demo">' + esc(rot) + ' (demonstração)</span>' : '<a class="btn btn-ouro btn-sm" target="_blank" rel="noopener" href="https://wa.me/' + esc(num) + '?text=' + encodeURIComponent(msg) + '">' + esc(rot) + '</a>';
     const alvo = m ? botao(m.whatsapp, 'WhatsApp da ' + m.curto)
       : C.marca.whatsappGeral ? botao(C.marca.whatsappGeral, 'WhatsApp da equipe')
       : botao('', 'WhatsApp da equipe');

@@ -28,13 +28,6 @@
     (m.instagram ? '<a class="btn btn-linha-escura btn-sm btn-ig" href="#" data-ig="@' + esc(m.instagram) + '" aria-label="Instagram de ' + esc(m.nome) + ' (perfil fictício)"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.300" cy="6.700" r=".8"/></svg>@' + esc(m.instagram) + '</a>' : '') +
     '</div></div></article>').join('');
 
-  // um botão de Instagram por médica sob a foto do trio (ordem da foto: Helena, Luíza, Marina)
-  const igTrio = document.getElementById('igTrio');
-  if (igTrio) {
-    igTrio.innerHTML = ['helena', 'luiza', 'marina'].map((id) => C.medicas.find((x) => x.id === id)).filter((m) => m && m.instagram).map((m) =>
-      '<div class="ig-item"><span class="ig-nome">' + esc(m.curto) + '</span><a class="btn btn-linha-escura btn-sm btn-ig" href="#" data-ig="@' + esc(m.instagram) + '" aria-label="Instagram de ' + esc(m.nome) + ' (perfil fictício)"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.300" cy="6.700" r=".8"/></svg>@' + esc(m.instagram) + '</a></div>').join('');
-  }
-
   // perfis fictícios: o botão mostra um aviso em vez de abrir o Instagram
   let aviso;
   document.addEventListener('click', (e) => {
@@ -56,6 +49,7 @@
   const burger = $('#burger'), menu = $('#menu');
   burger.addEventListener('click', () => { const a = menu.classList.toggle('aberto'); burger.setAttribute('aria-expanded', String(a)); });
   menu.addEventListener('click', (e) => { if (e.target.tagName === 'A') { menu.classList.remove('aberto'); burger.setAttribute('aria-expanded', 'false'); } });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && menu.classList.contains('aberto')) { menu.classList.remove('aberto'); burger.setAttribute('aria-expanded', 'false'); burger.focus(); } });
   const topo = $('#topo');
   const onScroll = () => topo.classList.toggle('rolou', scrollY > 20);
   addEventListener('scroll', onScroll, { passive: true }); onScroll();
