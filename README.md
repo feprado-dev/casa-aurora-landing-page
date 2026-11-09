@@ -2,6 +2,7 @@
 
 Landing page e área da equipe para uma clínica **fictícia** de obstetrícia, criada como projeto de portfólio.
 Clínica, médicas, contatos, perfis de Instagram e textos são inventados.
+Imagens manipuladas com IA
 
 **Site no ar:** https://casa-aurora-portfolio.vercel.app
 
